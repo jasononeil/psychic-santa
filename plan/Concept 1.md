@@ -15,33 +15,33 @@ How it might work
 
 ### 2. There are different projects.  Examples might include:
 
-	* Haxe Standard Library (haxedoc.org/p/haxe/)
-	* NME					(haxedoc.org/p/nme/)
-	* Actuate				(haxedoc.org/p/actuate/)
-	* Ufront				(haxedoc.org/p/ufront/)
-	* munit					(haxedoc.org/p/munit/)
-	* detox					(haxedoc.org/p/detox/)
-	* LocalProject			(localhost:2000/p/localproject/)
+ * Haxe Standard Library (haxedoc.org/p/haxe/)
+ * NME					(haxedoc.org/p/nme/)
+ * Actuate				(haxedoc.org/p/actuate/)
+ * Ufront				(haxedoc.org/p/ufront/)
+ * munit					(haxedoc.org/p/munit/)
+ * detox					(haxedoc.org/p/detox/)
+ * LocalProject			(localhost:2000/p/localproject/)
 
 ### 3. Each project might include
 
-	* name (slug, haxelib name)
-	* title (a longer title allowing full spaces and capitals etc)
-	* homepage (a link to a project homepage, eg haxenme.org, jasononeil.github.com/detox/)
-	* sourceURL (a link to an online place where the source can be viewed, maps to class paths)
-	* HasMany -> Versions
-		* hash -> a hash of the haxedoc.xml + haxelib.xml
-		* haxedocXml -> the Xml of all files relevant to this project
-		* haxelibXml -> the Xml of the haxelib file (and so, dependencies, owner, tags etc)
-		* versionNumber -> pulled from haxelib file
-	* HasMany -> Pages (articles, wiki style)
-		* Pages are basically wiki-like Markdown article.
-	* index -> A single page that serves as the homepage for this project's documentation
+ * name (slug, haxelib name)
+ * title (a longer title allowing full spaces and capitals etc)
+ * homepage (a link to a project homepage, eg haxenme.org, jasononeil.github.com/detox/)
+ * sourceURL (a link to an online place where the source can be viewed, maps to class paths)
+ * HasMany -> Versions
+     * hash -> a hash of the haxedoc.xml + haxelib.xml
+     * haxedocXml -> the Xml of all files relevant to this project
+     * haxelibXml -> the Xml of the haxelib file (and so, dependencies, owner, tags etc)
+     * versionNumber -> pulled from haxelib file
+ * HasMany -> Pages (articles, wiki style)
+ 	* Pages are basically wiki-like Markdown article.
+ * index -> A single page that serves as the homepage for this project's documentation
 
-   So there are two main things a project can do for their documentation:
+So there are two main things a project can do for their documentation:
 
-    * API Documentation - based on the data in haxedoc.xml
-    * Pages - these can be tutorials, introductions, in depth explanations etc.
+ * API Documentation - based on the data in haxedoc.xml, but with extra user-generated comments, examples and notes.
+ * Pages - these can be tutorials, introductions, in depth explanations etc.
 
 ### 4. API Documentation
 
@@ -83,20 +83,23 @@ User generated content:
  	* Field examples (demonstrate how that specific property or function works, can be more than one example)
  	* Class examples (demonstrate the entire class working together, can be more than one example)
  	* General comments on the class, at the bottom of the file
+ * In the case that both in-code documentation and user generated documentation are present, keep both.  
  * All user generated content is also marked with LowestValidVersion and HighestValidVersion, so that if a comment or example is no longer relevant / accurate, we can leave it for old versions but put in a new one for new versions.
 
 ### 5. Pages
 
 Pages are like a wiki - multiple people can edit them, and they are meant for Introductions, Tutorials, Walkthroughs, Explanations etc - they are for long form content.
 
-Model:
+The "Page" model might look like:
 
-	* Page
-	* Title (text, also used as slug in URL)
-	* Content (Markdown)
-	* LowestValidVersion - the first version of the library that this article is relevant to
-	* HighestValidVersion - the last version of the library that this article is relevant to
-	* History -> Array<{date, user, markdown}> (array of changes over time)
+ * Page
+ * Title (text, also used as slug in URL)
+ * Content (Markdown)
+ * LowestValidVersion - the first version of the library that this article is relevant to
+ * HighestValidVersion - the last version of the library that this article is relevant to
+ * History -> Array<{date, user, markdown}> (array of changes over time)
+
+It might also be worth looking at having a heirarchy of pages - being able to group them into sections, tutorials, manuals etc.  The other option is to have a flat wiki-like structure.  I'm okay with either I guess.
 
 ### 6. Users and Signup
 
